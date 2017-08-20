@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EuropaRTE", "EuropaRTE\EuropaRTE.csproj", "{FA3C1578-2674-4FAF-84E5-F3A4B189F2B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EuropaRTL", "EuropaRTE\EuropaRTL.csproj", "{FA3C1578-2674-4FAF-84E5-F3A4B189F2B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{AC3860E7-4F99-453F-9121-B4ADCE7E7C3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{FA3C1578-2674-4FAF-84E5-F3A4B189F2B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA3C1578-2674-4FAF-84E5-F3A4B189F2B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA3C1578-2674-4FAF-84E5-F3A4B189F2B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC3860E7-4F99-453F-9121-B4ADCE7E7C3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC3860E7-4F99-453F-9121-B4ADCE7E7C3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC3860E7-4F99-453F-9121-B4ADCE7E7C3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC3860E7-4F99-453F-9121-B4ADCE7E7C3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6FA7E6F5-337B-466D-9BC8-A37FA53C49D4}
 	EndGlobalSection
 EndGlobal
