@@ -15,6 +15,14 @@ namespace EuropaRTL
         using System.Runtime.Serialization.Formatters.Binary;
         using System.Security.Cryptography;
 
+        public enum OS
+        {
+            Windows = 0,
+            Linux,
+            MacOS,
+            Unix,
+            Other
+        }
         /// <summary>
         /// This class contains a lot of Extensions some generic some type specific most of them are self explanatory, those wich are not are documented properly
         /// </summary>
@@ -40,7 +48,6 @@ namespace EuropaRTL
                     }
                 }
             }
-
             /// <summary>
             /// !!!Stream is flushed but kept open!!!
             /// </summary>
@@ -57,18 +64,6 @@ namespace EuropaRTL
             }
 
             public static byte[] Hash<T>(this T io) => SHA256.Create().ComputeHash(io.Bytes());
-
-            public static int SumDigits(this int n)
-            {
-                var work = n.Shatter();
-                var pile = 0;
-                foreach (var item in work)
-                {
-                    pile += item;
-                }
-                return pile;
-            }
-
             public static string Snapshot<T>(this T obj, string ext)
             {
                 var hash = obj.Hash();
@@ -83,92 +78,25 @@ namespace EuropaRTL
                 return file;
             }
             /// <summary>
-            /// Shatter a number to its digits
+            /// The os to assume on OS dependent utilities
             /// </summary>
-            /// <param name="reverse">Should the number be reversed before returning</param>
-            /// <returns>An array containing the number digits</returns>
-            public static int[] Shatter(this int n, bool reverse)
-            {
-                List<int> work = new List<int>();
-                if (!(n > 9))
-                    work.Add(n);
-                else
-                {
-                    while (n > 0)
-                    {
-                        work.Add(n % 10);
-                        n /= 10;
-                    }
-                }
-                if (!reverse)
-                    work.Reverse();
-                return work.ToArray();
-            }
-
-            public static short[] Shatter(this short n, bool reverse) => Shatter(n, reverse);
-
-            public static long[] Shatter(this long n, bool reverse)
-            {
-                List<long> work = new List<long>();
-                if (!(n > 9))
-                    work.Add(n);
-                else
-                {
-                    while (n > 0)
-                    {
-                        work.Add(n % 10);
-                        n /= 10;
-                    }
-                }
-                if (!reverse)
-                    work.Reverse();
-                return work.ToArray();
-            }
-
-            public static int[] Shatter(this int n) => Shatter(n, false);
-
-            public static string String(this long[] i) => System.String.Join("", new List<long>(i).ConvertAll(n => n.ToString()));
-
-            public static string String(this short[] i) => System.String.Join("", new List<short>(i).ConvertAll(n => n.ToString()));
-
-            public static int Int(this string i) => int.TryParse(i, out int rt) ? rt : throw new StackOverflowException("Number too big for a int try Long()");
-
-            public static long Long(this string i) => long.TryParse(i, out long rt) ? rt : throw new StackOverflowException("Number is too big to be computed");
-
+            public static OS os = OS.Windows;
+            public static char customSep = '\0';
             /// <summary>
-            /// Subset a list works like python eg. passing 2 and 5 will get elements 2 to 4
+            /// Forma a path to a file from a string default to windows style paths
             /// </summary>
-            /// <param name="sindex">Start Index</param>
-            /// <param name="eindex">First element out of the list</param>
-            /// <returns>a list containnig your subset</returns>
-            /// <exception cref="IndexOutOfRangeException">When the indexes are out of the list range</exception>
-            public static T[] Subset<T>(this T[] a, int sindex, uint eindex)
+            /// <remarks>Make sure to set os property or it will default to windows</remarks>
+            public static string FormPath(this string i, char separator)
             {
-                if (a.Length >= sindex || a.Length <= (eindex - 1)) throw new IndexOutOfRangeException($"Tryed to sublist list out of range, tried {sindex} and {eindex}, lenght was {a.Length}");
-                List<T> sub = new List<T>();
-                for (var i = sindex; i <= eindex; i++)
+                if (os == OS.Windows)
+                    i.Replace(separator, '\\');
+                else if (os == OS.Linux || os == OS.MacOS || os == OS.Unix)
+                    i.Replace(separator, '/');
+                else if (os == OS.Other)
                 {
-                    sub.Add(a[i]);
+                    i.Replace(separator, customSep);
                 }
-                return sub.ToArray();
-            }
-
-            /// <summary>
-            /// Subset an array works like python eg. passing 2 and 5 will get elements 2 to 4
-            /// </summary>
-            /// <param name="sindex">Start Index</param>
-            /// <param name="eindex">First element out of the list</param>
-            /// <returns>a list containnig your subset</returns>
-            /// <exception cref="IndexOutOfRangeException">When the indexes are out of the array range</exception>
-            public static List<T> Subset<T>(this List<T> l, int sindex, uint eindex)
-            {
-                if (l.Count >= sindex || l.Count <= (eindex - 1)) throw new IndexOutOfRangeException($"Tryed to subset {l.ToString()} out of range, tried {sindex} and {eindex}, lenght was {l.Count}");
-                List<T> sub = new List<T>();
-                for (var i = sindex; i <= eindex; i++)
-                {
-                    sub.Add(l[i]);
-                }
-                return sub;
+                return i;
             }
         }
     }

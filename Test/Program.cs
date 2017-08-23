@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Reflection;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EuropaRTL.Utilities;
+using Unosquare.Swan;
 
 namespace Test
 {
@@ -12,11 +8,17 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            long t = 61789372994;
-            Console.WriteLine(t.Shatter(true).String());
-            Console.WriteLine(t.Shatter(false).String());
-            Console.WriteLine(t.Shatter(false).String().Long().ToString());
-            t.Shatter(true).Snapshot(".bin");
+            long[] ll = {
+                49927398716,
+                49927398717,
+                1234567812345678,
+                1234567812345670
+            };
+            foreach (var item in ll)
+            {
+                item.ToString().WriteLine();
+                Algoritmhs.CheckLuhn(item).ToString().WriteLine();
+            }
             Console.ReadKey();
         }
     }
