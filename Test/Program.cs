@@ -16,8 +16,14 @@ namespace Test
             };
             foreach (var item in ll)
             {
+                item.Base16(true).WriteLine();
                 item.ToString().WriteLine();
-                Algoritmhs.CheckLuhn(item).ToString().WriteLine();
+                item.CheckLuhn().ToString().WriteLine();
+            }
+            long[] cd = { 25245, 48124, 88588, 25, 957828 };
+            foreach (var item in cd)
+            {
+                item.GetLuhnDigit().ToString().WriteLine();
             }
             Console.ReadKey();
         }

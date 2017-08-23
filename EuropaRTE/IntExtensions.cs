@@ -10,6 +10,7 @@ namespace EuropaRTL
     {
         public static partial class Extensions
         {
+            private const string Alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
             /// <summary>
             /// Shatter a number to its digits
             /// </summary>
@@ -76,9 +77,64 @@ namespace EuropaRTL
 
             public static long Factorial(this long n) => n == 0 ? 1 : n * Factorial(n - 1);
 
-            public static int Int(this string i) => int.TryParse(i, out int rt) ? rt : throw new StackOverflowException("Number too big for a int try Long()");
+            public static int Int(this string i) => int.TryParse(i, out int rt) ? rt : throw new StackOverflowException("Number too big for a int try Long(), or invalid input string");
 
-            public static long Long(this string i) => long.TryParse(i, out long rt) ? rt : throw new StackOverflowException("Number is too big to be computed");
+            public static long Long(this string i) => long.TryParse(i, out long rt) ? rt : throw new StackOverflowException("Number is too big to be computed, or invalid input string");
+
+            public static string Base36(this long n, bool upCase = false)
+            {
+                if (n < 0) throw new ArgumentOutOfRangeException($"Number {n} can not be negative");
+
+                char[] alpha = Alphabet.ToCharArray();
+                var work = new Stack<char>();
+                while(n != 0)
+                {
+                    work.Push(alpha[n % 36]);
+                    n /= 36;
+                }
+                return upCase ? new string(work.ToArray()).ToUpper() : new string(work.ToArray());
+            }
+
+            public static string Base16(this long n, bool upCase = false)
+            {
+                if (n < 0) throw new ArgumentOutOfRangeException($"Number {n} can not be negative");
+
+                char[] alpha = Alphabet.ToCharArray();
+                var work = new Stack<char>();
+                while (n != 0)
+                {
+                    work.Push(alpha[n % 16]);
+                    n /= 16;
+                }
+                return upCase ? new string(work.ToArray()).ToUpper() : new string(work.ToArray());
+            }
+            public static string Base36(this int n, bool upCase = false)
+            {
+                if (n < 0) throw new ArgumentOutOfRangeException($"Number {n} can not be negative");
+
+                char[] alpha = Alphabet.ToCharArray();
+                var work = new Stack<char>();
+                while (n != 0)
+                {
+                    work.Push(alpha[n % 36]);
+                    n /= 36;
+                }
+                return upCase ? new string(work.ToArray()).ToUpper() : new string(work.ToArray());
+            }
+
+            public static string Base16(this int n, bool upCase = false)
+            {
+                if (n < 0) throw new ArgumentOutOfRangeException($"Number {n} can not be negative");
+
+                char[] alpha = Alphabet.ToCharArray();
+                var work = new Stack<char>();
+                while (n != 0)
+                {
+                    work.Push(alpha[n % 16]);
+                    n /= 16;
+                }
+                return upCase ? new string(work.ToArray()).ToUpper() : new string(work.ToArray());
+            }
         }
     }
 }

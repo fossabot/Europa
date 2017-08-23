@@ -149,6 +149,16 @@ namespace EuropaRTL
 
             #endregion
 
+            public static T[] Blend<T>(this T[] a, T[] b, int offSet, int interval)
+            {
+                var work = new List<T>(a.Length);
+                work.AddRange(a);
+                for (int i = offSet, i2 = 0; i < a.Length; i += interval, i2++)
+                {
+                    work[i] = b[i2];
+                }
+                return work.ToArray();
+            }
         }
     }
 }
