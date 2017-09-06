@@ -1,29 +1,23 @@
 ﻿using System;
-using EuropaRTL.Utilities;
 using Unosquare.Swan;
+using static Europa.RTL.RunTime.Evo;
 
 namespace Test
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            long[] ll = {
-                49927398716,
-                49927398717,
-                1234567812345678,
-                1234567812345670
-            };
-            foreach (var item in ll)
+            try
             {
-                item.Base16(true).WriteLine();
-                item.ToString().WriteLine();
-                item.CheckLuhn().ToString().WriteLine();
+                foreach (var item in Range(10, 1, 10, Operations.Mul))
+                {
+                    item.ToString().WriteLine();
+                }
             }
-            long[] cd = { 25245, 48124, 88588, 25, 957828 };
-            foreach (var item in cd)
+            catch (Exception e)
             {
-                item.GetLuhnDigit().ToString().WriteLine();
+                e.Message.WriteLine();
             }
             Console.ReadKey();
         }
